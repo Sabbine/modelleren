@@ -24,6 +24,8 @@ b1 = summary(stepd)$coefficients[2,1]
 b2 = summary(stepd)$coefficients[3,1]
 b3 = summary(stepd)$coefficients[4,1]
 
+#wow!
+
 n=length(x$js)
 cs_hat = numeric(n)
 for (i in 1:n){
