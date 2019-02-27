@@ -1,0 +1,33 @@
+---
+title: "Modelleren2A"
+output: pdf_document
+---
+
+```{r}
+library(knitr)
+library(MASS)
+library(car)
+library(readxl)
+```
+
+```{r}
+x<-read_excel("TU Delft publications.xlsx")
+x
+summary(x)
+model <- lm(cs~js+p_int_collab+p_industry+n_authors+n_countries+n_pages+n_refs, data=x)
+stepd <- stepAIC(model, direction ='backward',trace=FALSE)
+stepf <- stepAIC(model, direction ='forward',trace=FALSE)
+stepdb <- stepAIC(model, direction ='both',trace=FALSE)
+summary(stepd)$coefficients[2,3]
+b0 = summary(stepd)$coefficients[1,1]
+b1 = summary(stepd)$coefficients[2,1]
+b2 = summary(stepd)$coefficients[3,1]
+b3 = summary(stepd)$coefficients[4,1]
+
+n=length(x$js)
+cs_hat = numeric(n)
+for (i in 1:n){
+  cs_hat[i] = b0 + b1*x$js[i] + b2*x$n_authors[i] + b3*x$n_refs[i]
+}
+
+```
